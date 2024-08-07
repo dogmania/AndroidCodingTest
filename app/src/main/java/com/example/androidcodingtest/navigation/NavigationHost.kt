@@ -21,7 +21,11 @@ fun NavigationHost(
         }
 
         composable(NavRoutes.AllTasksScreen.route) {
-            AllTasksScreen()
+            AllTasksScreen(
+                goToCreateTaskScreen = {
+                    navHostController.navigate(NavRoutes.CreateTaskScreen.route)
+                }
+            )
         }
 
         composable(NavRoutes.CreateTaskScreen.route) {
