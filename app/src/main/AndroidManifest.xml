@@ -14,7 +14,7 @@
         android:name=".application.AndroidCodingTestApplication"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".screens.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AndroidCodingTest">
