@@ -4,7 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.androidcodingtest.MainScreen
+import com.example.androidcodingtest.screens.MainScreen
+import com.example.androidcodingtest.screens.alltasks.AllTasksScreen
 
 @Composable
 fun NavigationHost(
@@ -12,10 +13,14 @@ fun NavigationHost(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = NavRoutes.MainScreen.route
+        startDestination = NavRoutes.AllTasksScreen.route
     ) {
         composable(NavRoutes.MainScreen.route) {
             MainScreen()
+        }
+
+        composable(NavRoutes.AllTasksScreen.route) {
+            AllTasksScreen()
         }
     }
 }
