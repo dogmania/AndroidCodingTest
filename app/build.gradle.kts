@@ -93,9 +93,12 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.core)
+    implementation(libs.hilt.work)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation)
     kapt(libs.hilt.compiler)
+    kapt(libs.androidx.hilt.compiler)
+    annotationProcessor(libs.androidx.hilt.compiler)
 
     // Coroutine
     implementation(libs.coroutines.core)
@@ -112,4 +115,5 @@ dependencies {
     implementation(libs.protobuf.kotlin.lite)
 
     // WorkManager
+    implementation(libs.androidx.work)
 }
