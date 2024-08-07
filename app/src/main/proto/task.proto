@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "com.example.androidcodingtest";
+option java_multiple_files = true;
+
+message Task {
+    string id = 1;
+    string title = 2;
+    string status = 3;
+}
+
+message TaskList {
+    repeated Task tasks = 1;
+}

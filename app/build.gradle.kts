@@ -55,7 +55,7 @@ android {
     }
     protobuf {
         protoc {
-            artifact = "com.google.protobuf:protoc:3.11.0"
+            artifact = "com.google.protobuf:protoc:4.27.3"
         }
 
         generateProtoTasks {
@@ -110,4 +110,6 @@ dependencies {
     // ProtoBuf
     implementation(libs.protobuf.javalite)
     implementation(libs.protobuf.kotlin.lite)
+
+    // WorkManager
 }
