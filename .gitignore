@@ -14,3 +14,6 @@
 .cxx
 local.properties
 .idea/vcs.xml
+.idea/gradle.xml
+gradle/wrapper/gradle-wrapper.properties
+.idea/inspectionProfiles/
