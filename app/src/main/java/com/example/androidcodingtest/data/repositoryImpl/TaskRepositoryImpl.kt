@@ -27,4 +27,10 @@ class TaskRepositoryImpl @Inject constructor(
             taskList.tasksList
         }
     }
+
+    override suspend fun getTask(id: String): Flow<Task> {
+        return dataStore.data.map { taskList ->
+            taskList.tasksList.firstOrNull { it.id == id } ?: throw NoSuchElementException("Task를 찾지 못했습니다.")
+        }
+    }
 }
