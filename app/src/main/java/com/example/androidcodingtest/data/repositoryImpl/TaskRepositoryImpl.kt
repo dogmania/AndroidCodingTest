@@ -11,12 +11,12 @@ import javax.inject.Inject
 class TaskRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<TaskList>
 ): TaskRepository {
-    override suspend fun createTask(id: String, title: String) {
+    override suspend fun createTask(id: String, title: String, content: String) {
         dataStore.updateData { taskList ->
             val newTask = Task.newBuilder()
                 .setId(id)
                 .setTitle(title)
-                .setStatus("추가됨")
+                .setContent(content)
                 .build()
             taskList.toBuilder().addTasks(newTask).build()
         }
