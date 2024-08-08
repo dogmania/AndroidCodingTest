@@ -1,5 +1,6 @@
 package com.example.androidcodingtest.screens.alltasks
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +36,8 @@ import com.example.androidcodingtest.ui.theme.Main
 
 @Composable
 fun AllTasksScreen(
-    goToCreateTaskScreen: () -> Unit = {}
+    goToCreateTaskScreen: () -> Unit = {},
+    goToTaskDetailScreen: (String) -> Unit = {}
 ) {
     val viewModel: AllTasksViewModel = hiltViewModel()
     val uiState = viewModel.uiState.collectAsState()
@@ -44,14 +48,18 @@ fun AllTasksScreen(
 
     AllTasksContent(
         goToCreateTaskScreen = goToCreateTaskScreen,
-        tasks = uiState.value.taskList
+        tasks = uiState.value.taskList,
+        onClickTaskItem = { id: String ->
+            goToTaskDetailScreen(id)
+        }
     )
 }
 
 @Composable
 fun AllTasksContent(
     goToCreateTaskScreen: () -> Unit = {},
-    tasks: List<Task> = emptyList()
+    tasks: List<Task> = emptyList(),
+    onClickTaskItem: (String) -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -65,7 +73,13 @@ fun AllTasksContent(
                     .fillMaxSize()
             ) {
                 items(tasks) { task ->
-                    TaskItem(title = task.title, status = task.status, content = task.content)
+                    TaskItem(
+                        id = task.id,
+                        title = task.title,
+                        status = task.status,
+                        content = task.content,
+                        onClickTaskItem = onClickTaskItem
+                    )
                 }
             }
         }
@@ -116,12 +130,18 @@ fun AllTasksScreenTopBar() {
 
 @Composable
 fun TaskItem(
+    id: String = "",
     title: String = "",
     status: String = "",
-    content: String = ""
+    content: String = "",
+    onClickTaskItem: (String) -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onClickTaskItem(id)
+            }
     ) {
         Column(
             modifier = Modifier.padding(10.dp)
