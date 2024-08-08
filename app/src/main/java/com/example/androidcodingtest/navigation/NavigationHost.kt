@@ -16,6 +16,8 @@ fun NavigationHost(
         navController = navHostController,
         startDestination = NavRoutes.AllTasksScreen.route
     ) {
+        val popScreen: () -> Unit = { navHostController.popBackStack() }
+
         composable(NavRoutes.MainScreen.route) {
             MainScreen()
         }
@@ -29,7 +31,9 @@ fun NavigationHost(
         }
 
         composable(NavRoutes.CreateTaskScreen.route) {
-            CreateTaskScreen()
+            CreateTaskScreen(
+                popScreen = popScreen
+            )
         }
     }
 }
