@@ -46,13 +46,14 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
     protobuf {
         protoc {
             artifact = "com.google.protobuf:protoc:4.27.3"
@@ -64,10 +65,19 @@ android {
                     id("java") {
                         option("lite")
                     }
-                    id("kotlin") {
-                        option("lite")
-                    }
+//                    id("kotlin") {
+//                        option("lite")
+//                    }
                 }
+            }
+        }
+    }
+
+    sourceSets {
+        getByName("main") {
+            java {
+                java.srcDirs("build/generated/source/proto/debug/java")
+//                kotlin.srcDirs("build/generated/source/proto/main/kotlin")
             }
         }
     }
