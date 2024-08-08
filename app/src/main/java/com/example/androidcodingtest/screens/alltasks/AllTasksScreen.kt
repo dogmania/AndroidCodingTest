@@ -65,7 +65,7 @@ fun AllTasksContent(
                     .fillMaxSize()
             ) {
                 items(tasks) { task ->
-                    TaskItem(title = task.title, status = task.status)
+                    TaskItem(title = task.title, status = task.status, content = task.content)
                 }
             }
         }
@@ -117,7 +117,8 @@ fun AllTasksScreenTopBar() {
 @Composable
 fun TaskItem(
     title: String = "",
-    status: String = ""
+    status: String = "",
+    content: String = ""
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -130,7 +131,13 @@ fun TaskItem(
                 style = TextStyle(
                     fontWeight = FontWeight.Bold
                 ),
-                fontSize = 15.sp
+                fontSize = 15.sp,
+                maxLines = 1
+            )
+
+            Text(
+                text = content,
+                maxLines = 2
             )
 
             Text(
