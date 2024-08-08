@@ -1,6 +1,7 @@
 package com.example.androidcodingtest.screens.createtask
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
@@ -17,6 +18,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.Operation
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.example.androidcodingtest.screens.component.MultiLineInputTextField
 import com.example.androidcodingtest.screens.component.SingleLineInputTextField
 import com.example.androidcodingtest.ui.theme.Main
 import com.example.androidcodingtest.worker.TaskWorker
@@ -28,10 +30,11 @@ fun CreateTaskScreen(
 ) {
     val viewModel: CreateTaskViewModel = hiltViewModel()
     val title = remember { mutableStateOf("") }
+    val content = remember { mutableStateOf("") }
     val onClickBtnCreate: () -> Unit = {
         val taskId = UUID.randomUUID().toString()
 
-        viewModel.createTask(id = taskId, title = title.value)
+        viewModel.createTask(id = taskId, title = title.value, content = content.value)
 
         val workRequest = OneTimeWorkRequestBuilder<TaskWorker>()
             .setInputData(workDataOf("task_id" to taskId))
@@ -43,6 +46,7 @@ fun CreateTaskScreen(
 
     CreateTaskContent(
         saveTitle = { newTitle: String -> title.value = newTitle },
+        saveContent = { newContent: String -> content.value = newContent },
         onClickBtnCreate = onClickBtnCreate
     )
 }
@@ -50,16 +54,26 @@ fun CreateTaskScreen(
 @Composable
 fun CreateTaskContent(
     saveTitle: (String) -> Unit = {},
+    saveContent: (String) -> Unit = {},
     onClickBtnCreate: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        SingleLineInputTextField(
-            placeHolder = "작업을 입력하세요.",
-            saveEventHandler = saveTitle
-        )
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            SingleLineInputTextField(
+                placeHolder = "작업을 입력하세요.",
+                saveEventHandler = saveTitle
+            )
+
+            MultiLineInputTextField(
+                placeHolder = "상세 내용을 입력하세요.",
+                saveEventHandler = saveContent
+            )
+        }
 
         Button(
             onClick = {
@@ -72,6 +86,8 @@ fun CreateTaskContent(
         ) {
             Text(text = "작업 생성")
         }
+
+
     }
 }
 

@@ -12,9 +12,9 @@ import javax.inject.Inject
 class CreateTaskViewModel @Inject constructor(
     private val repository: TaskRepository
 ): BaseViewModel<CreateTaskPageState>(CreateTaskPageState()) {
-    fun createTask(id: String, title: String) {
+    fun createTask(id: String, title: String, content: String) {
         viewModelScope.launch {
-            repository.createTask(id = id, title = title)
+            repository.createTask(id = id, title = title, content = content)
         }
     }
 }
