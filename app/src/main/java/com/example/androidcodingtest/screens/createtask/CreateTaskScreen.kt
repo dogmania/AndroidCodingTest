@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -17,11 +18,14 @@ import androidx.work.Operation
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.androidcodingtest.screens.component.SingleLineInputTextField
+import com.example.androidcodingtest.ui.theme.Main
 import com.example.androidcodingtest.worker.TaskWorker
 import java.util.UUID
 
 @Composable
-fun CreateTaskScreen() {
+fun CreateTaskScreen(
+    popScreen: () -> Unit
+) {
     val viewModel: CreateTaskViewModel = hiltViewModel()
     val title = remember { mutableStateOf("") }
     val onClickBtnCreate: () -> Unit = {
@@ -33,6 +37,8 @@ fun CreateTaskScreen() {
             .setInputData(workDataOf("task_id" to taskId))
             .build()
         WorkManager.getInstance().enqueue(workRequest)
+
+        popScreen()
     }
 
     CreateTaskContent(
@@ -58,8 +64,11 @@ fun CreateTaskContent(
         Button(
             onClick = {
                 onClickBtnCreate()
-            }
-            , modifier = Modifier.align(Alignment.BottomCenter)
+            },
+            modifier = Modifier.align(Alignment.BottomCenter),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Main
+            )
         ) {
             Text(text = "작업 생성")
         }
