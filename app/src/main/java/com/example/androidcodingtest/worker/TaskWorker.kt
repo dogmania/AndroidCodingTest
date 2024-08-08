@@ -25,11 +25,11 @@ class TaskWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         val taskId = inputData.getString("task_id") ?: Result.failure()
 
-        // 5초 동안 대기
-        delay(5000)
-
         // 대기
         updateTaskStatus(taskId.toString(), "대기 중")
+
+        // 5초 동안 대기
+        delay(5000)
 
         // 진행
         updateTaskStatus(taskId.toString(), "진행 중")
